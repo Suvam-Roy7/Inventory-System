@@ -1,0 +1,101 @@
+server:
+  port: 7000
+
+spring:
+  cloud:
+    gateway:
+
+      # ✅ CORS CONFIG (ONLY PLACE YOU HANDLE CORS)
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+      routes:
+                - id: USERSERVICE
+                  uri: lb://USERSERVICE
+                  predicates:
+                    - Path=/userservice/users/**
+                - id: USERSERVICE-DOCS
+                  uri: lb://USERSERVICE
+                  predicates:
+                    - Path=/userservice/v3/api-docs
+                  filters:
+                    - StripPrefix=1
+
+                - id: PRODUCTSERVICE
+                  uri: lb://PRODUCTSERVICE
+                  predicates:
+                    - Path=/productservice/products/**
+                - id: PRODUCTSERVICE-DOCS
+                  uri: lb://PRODUCTSERVICE
+                  predicates:
+                   - Path=/productservice/v3/api-docs
+                  filters:
+                   - StripPrefix=1
+
+                - id: ORDERSERVICE
+                  uri: lb://ORDERSERVICE
+                  predicates:
+                    - Path=/orderservice/orders/**
+                - id: ORDERSERVICE-DOCS
+                  uri: lb://ORDERSERVICE
+                  predicates:
+                    - Path=/orderservice/v3/api-docs
+                  filters:
+                    - StripPrefix=1
+
+                - id: INVENTORYSERVICE
+                  uri: lb://INVENTORYSERVICE
+                  predicates:
+                    - Path=/inventoryservice/inventory/**
+                - id: INVENTORYSERVICE-DOCS
+                  uri: lb://INVENTORYSERVICE
+                  predicates:
+                    - Path=/inventoryservice/v3/api-docs
+                  filters:
+                    - StripPrefix=1
+
+                - id: AUTHENTICATIONSERVICE
+                  uri: lb://AUTHENTICATIONSERVICE
+                  predicates:
+                    - Path=/authenticationservice/auth/**
+                - id: AUTHENTICATIONSERVICE-DOCS
+                  uri: lb://AUTHENTICATIONSERVICE
+                  predicates:
+                    - Path=/authenticationservice/v3/api-docs
+                  filters:
+                    - StripPrefix=1
+
+    discovery:
+      locator:
+        enabled: true
+        lower-case-service-id: true
+
+
+# ================= SWAGGER AGGREGATION =================
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /inventorymanagement/swagger-ui.html
+    urls:
+      - url: /userservice/v3/api-docs
+        name: USERSERVICE
+      - url: /productservice/v3/api-docs
+        name: PRODUCTSERVICE
+      - url: /orderservice/v3/api-docs
+        name: ORDERSERVICE
+      - url: /inventoryservice/v3/api-docs
+        name: INVENTORYSERVICE
+      - url: /authenticationservice/v3/api-docs
+        name: AUTHENTICATIONSERVICE
