@@ -19,6 +19,8 @@ import DeleteProduct from "./Pages/product-routs/DeleteProduct";
 import UpdateProduct from "./Pages/product-routs/UpdateProduct";
 import PlaceOrder from "./Pages/order-routs/PlaceOrder";
 import OrderHistory from "./Pages/order-routs/OrderHistory";
+import UpdateProductQuantity from "./Pages/inventory-routs/UpdateProductQuantity";
+import ViewInventory from "./Pages/inventory-routs/ViewInventory";
 
 function App() {
   return (
@@ -45,6 +47,14 @@ function App() {
         <Route path="/order" element={<PrivateUserRout />}>
           <Route path="placeorder" element={<PlaceOrder />} />
           <Route path="orderhistory" element={<OrderHistory />} />
+        </Route>
+
+        <Route path="/inventory" element={<PrivateUserRout />}>
+          <Route
+            path="updateproductquantity"
+            element={<UpdateProductQuantity />}
+          />
+          <Route path="viewinventory" element={<ViewInventory />} />
         </Route>
       </Routes>
     </BrowserRouter>

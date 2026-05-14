@@ -13,6 +13,7 @@ import {
 import { FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 
+import { getProductById } from "../../services/product-service";
 import Base from "../../Component/Base";
 import { getCurrentUser } from "../../auth/auth";
 import { getOrderHistory } from "../../services/order-service";
@@ -25,21 +26,47 @@ const OrderHistory = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("ALL");
   const [expandedOrder, setExpandedOrder] = useState(null);
+  const [productMap, setProductMap] = useState({});
+
+  /* ================= LOAD ORDERS ================= */
+  const loadOrders = async () => {
+    try {
+      const data = await getOrderHistory(userid);
+      setOrders(data || []);
+    } catch (err) {
+      toast.error("Failed to load order history");
+    }
+  };
 
   useEffect(() => {
     loadOrders();
   }, []);
 
-  const loadOrders = async () => {
-    try {
-      const data = await getOrderHistory(userid);
-      setOrders(data || []);
-    } catch {
-      toast.error("Failed to load order history");
-    }
-  };
+  /* ================= FETCH PRODUCT NAMES ================= */
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const map = {};
 
-  /* ================= FILTER ================= */
+      const allItems = orders.flatMap((o) => o.orderItems || []);
+
+      await Promise.all(
+        allItems.map(async (item) => {
+          if (!map[item.product_id]) {
+            const res = await getProductById(item.product_id);
+            map[item.product_id] = res.productname;
+          }
+        }),
+      );
+
+      setProductMap(map);
+    };
+
+    if (orders.length) {
+      fetchProducts();
+    }
+  }, [orders]);
+
+  /* ================= FILTER ORDERS ================= */
   const filteredOrders = useMemo(() => {
     const now = new Date();
 
@@ -76,7 +103,7 @@ const OrderHistory = () => {
       <Container className="mt-4">
         <Card className="shadow">
           <CardBody>
-            {/* ================= HEADER ================= */}
+            {/* HEADER */}
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h4>Order History</h4>
 
@@ -92,7 +119,7 @@ const OrderHistory = () => {
               </InputGroup>
             </div>
 
-            {/* ================= FILTER ================= */}
+            {/* FILTER */}
             <div className="mb-3">
               <Button
                 size="sm"
@@ -121,7 +148,7 @@ const OrderHistory = () => {
               </Button>
             </div>
 
-            {/* ================= ORDERS (CARDS) ================= */}
+            {/* ORDERS */}
             {filteredOrders.length === 0 ? (
               <p className="text-center text-muted">No Orders Found</p>
             ) : (
@@ -132,7 +159,6 @@ const OrderHistory = () => {
                     <div className="d-flex justify-content-between align-items-center">
                       <div>
                         <h6 className="mb-1">Order #{order.orderid}</h6>
-
                         <small className="text-muted">
                           {new Date(order.date).toLocaleString()}
                         </small>
@@ -182,7 +208,8 @@ const OrderHistory = () => {
                           >
                             <div>
                               <div className="fw-semibold">
-                                Product ID: {item.product_id}
+                                {" "}
+                                {productMap[item.product_id] || "Loading..."}
                               </div>
                               <small className="text-muted">
                                 Qty: {item.quantity}

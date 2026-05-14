@@ -1,20 +1,22 @@
+/* ================= BACKGROUND ================= */
 .placeorder-bg {
   background-size: cover;
   min-height: 100vh;
   padding: 30px;
 }
 
+/* ================= CARD ================= */
 .custom-card {
   border-radius: 0px;
 }
 
-/* ===== TABLE HEADER ===== */
+/* ================= TABLE HEADER ================= */
 .table-head {
   background: #1f2937;
   color: white;
 }
 
-/* ===== PRODUCT SCROLL ===== */
+/* ================= SCROLL AREAS ================= */
 .product-scroll {
   max-height: 65vh;
   overflow-y: auto;
@@ -22,22 +24,129 @@
   padding-right: 6px;
 }
 
-/* ===== CART SCROLL ===== */
 .cart-scroll {
   max-height: 55vh;
   overflow-y: auto;
   padding-right: 6px;
 }
 
-/* ===== MAIN PAGE SCROLL (ADDED) ===== */
+/* ================= GLOBAL SCROLL ================= */
 html,
 body {
   overflow-y: auto;
 }
 
-/* ===== SCROLLBAR (FLAT SOLID STYLE - SAME AS YOURS) ===== */
+/* ================= SCROLLBAR ================= */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.product-scroll::-webkit-scrollbar,
+.cart-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
 
-/* Chrome / Edge / Safari */
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.product-scroll::-webkit-scrollbar-track,
+.cart-scroll::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.product-scroll::-webkit-scrollbar-thumb,
+.cart-scroll::-webkit-scrollbar-thumb {
+  background: #6b7280;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+.product-scroll::-webkit-scrollbar-thumb:hover,
+cart-scroll::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+/* ================= QUANTITY BOX ================= */
+.qty-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qty-input {
+  width: 60px;
+  text-align: center;
+  border-radius: 0px;
+}
+
+/* ================= CART PRICE ================= */
+.cart-price {
+  text-align: right;
+  font-weight: 600;
+}
+
+/* ================= TABLE FIX (IMPORTANT) ================= */
+
+/* BOTH TABLES MUST BE SAME */
+.table-fixed,
+.header-table,
+.body-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-bottom: 0 !important;
+}
+
+/* HEADER STYLE */
+.table-head {
+  background: #1f2937;
+  color: white;
+}
+
+/* ================= BACKGROUND ================= */
+.placeorder-bg {
+  background-size: cover;
+  min-height: 100vh;
+  padding: 30px;
+}
+
+/* ================= CARD ================= */
+.custom-card {
+  border-radius: 0px;
+}
+
+/* ================= TABLE HEADER ================= */
+.table-head {
+  background: #1f2937;
+  color: white;
+}
+
+/* ================= SCROLL AREAS ================= */
+.product-scroll {
+  max-height: 65vh;
+
+  /* IMPORTANT FIX: always reserve scrollbar space */
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  scrollbar-gutter: stable;
+
+  padding-right: 0;
+}
+
+.cart-scroll {
+  max-height: 55vh;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* ================= GLOBAL SCROLL ================= */
+html,
+body {
+  overflow-y: auto;
+}
+
+/* ================= SCROLLBAR ================= */
 html::-webkit-scrollbar,
 body::-webkit-scrollbar,
 .product-scroll::-webkit-scrollbar,
@@ -67,7 +176,7 @@ body::-webkit-scrollbar-thumb:hover,
   background: #374151;
 }
 
-/* ===== QUANTITY BOX ===== */
+/* ================= QUANTITY BOX ================= */
 .qty-box {
   display: flex;
   align-items: center;
@@ -80,8 +189,76 @@ body::-webkit-scrollbar-thumb:hover,
   border-radius: 0px;
 }
 
-/* ===== CART PRICE ===== */
+/* ================= CART PRICE ================= */
 .cart-price {
   text-align: right;
   font-weight: 600;
+}
+
+/* ================= TABLE FIX ================= */
+
+/* both tables must behave same */
+.table-fixed,
+.header-table,
+.body-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-bottom: 0 !important;
+}
+
+/* ================= COLUMN WIDTH CONTROL ================= */
+
+/* ID */
+.header-table th:nth-child(1),
+.body-table td:nth-child(1) {
+  width: 8%;
+  text-align: center;
+}
+
+/* NAME */
+.header-table th:nth-child(2),
+.body-table td:nth-child(2) {
+  width: 21%;
+  text-align: left;
+}
+
+/* CATEGORY */
+.header-table th:nth-child(3),
+.body-table td:nth-child(3) {
+  width: 21%;
+  text-align: center;
+}
+
+/* PRICE */
+.header-table th:nth-child(4),
+.body-table td:nth-child(4) {
+  width: 15%;
+  text-align: center;
+}
+
+/* STOCK */
+.header-table th:nth-child(5),
+.body-table td:nth-child(5) {
+  width: 15%;
+  text-align: center;
+}
+
+/* ACTION */
+.header-table th:nth-child(6) {
+  width: 20.7%;
+  text-align: center;
+}
+.body-table td:nth-child(6) {
+  width: 20%;
+  text-align: center;
+}
+
+/* ================= TEXT HANDLING ================= */
+.header-table th,
+.body-table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
 }

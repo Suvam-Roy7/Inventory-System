@@ -1,0 +1,160 @@
+/* ================= BACKGROUND / LAYOUT ================= */
+.inventory-bg {
+  background-size: cover;
+  min-height: 100vh;
+  padding: 30px;
+}
+
+/* ================= CARD ================= */
+.custom-card {
+  border-radius: 0px;
+}
+
+/* ================= TABLE BASE (CRITICAL FIX) ================= */
+.header-table,
+.body-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+/* ================= SCROLL FIX (ONLY STRUCTURE FIX) ================= */
+.inventory-scroll {
+  max-height: 60vh;
+
+  /* important: keeps scrollbar space stable */
+  overflow-y: auto;
+  overflow-x: auto;
+
+  padding-right: 6px;
+}
+
+/* ================= COLUMN WIDTH CONTROL ================= */
+
+/* ID */
+.header-table th:nth-child(1),
+.body-table td:nth-child(1) {
+  width: 8%;
+  text-align: center;
+}
+
+/* NAME */
+.header-table th:nth-child(2),
+.body-table td:nth-child(2) {
+  width: 21%;
+  text-align: left;
+}
+
+/* CATEGORY */
+.header-table th:nth-child(3),
+.body-table td:nth-child(3) {
+  width: 21%;
+  text-align: center;
+}
+
+/* PRICE */
+.header-table th:nth-child(4),
+.body-table td:nth-child(4) {
+  width: 15%;
+  text-align: center;
+}
+
+/* STOCK */
+.header-table th:nth-child(5),
+.body-table td:nth-child(5) {
+  width: 15%;
+  text-align: center;
+}
+
+/* ACTION */
+.header-table th:nth-child(6),
+.body-table td:nth-child(6) {
+  width: 20%;
+  text-align: center;
+}
+
+/* ================= TEXT HANDLING ================= */
+.header-table th,
+.body-table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+/* ================= RIGHT PANEL SCROLLS ================= */
+.alert-scroll {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.outofstock-scroll {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* ================= SCROLLBAR (SAME AS PLACEORDER) ================= */
+
+/* Chrome / Edge / Safari */
+.inventory-scroll::-webkit-scrollbar,
+.alert-scroll::-webkit-scrollbar,
+.outofstock-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.inventory-scroll::-webkit-scrollbar-track,
+.alert-scroll::-webkit-scrollbar-track,
+.outofstock-scroll::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+
+.inventory-scroll::-webkit-scrollbar-thumb,
+.alert-scroll::-webkit-scrollbar-thumb,
+.outofstock-scroll::-webkit-scrollbar-thumb {
+  background: #6b7280;
+}
+
+.inventory-scroll::-webkit-scrollbar-thumb:hover,
+.alert-scroll::-webkit-scrollbar-thumb:hover,
+.outofstock-scroll::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+/* ================= RIGHT PANEL HEADINGS ================= */
+h5 {
+  font-weight: 600;
+}
+
+/* ================= OUT OF STOCK ROW (IMPORTANT FIX) ================= */
+.out-of-stock-row td {
+  background-color: #ffe5e5 !important;
+  color: #b30000 !important;
+  font-weight: 600;
+}
+
+/* override bootstrap hover */
+.out-of-stock-row:hover td {
+  background-color: #ffd1d1 !important;
+}
+
+/* optional low stock row highlight */
+.low-stock-row td {
+  background-color: #fff7e6 !important;
+}
+
+/* make ZERO stock more visible */
+.stock-zero {
+  color: #d00000;
+  font-weight: 700;
+}
+
+.badge {
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  color: #fff;
+}

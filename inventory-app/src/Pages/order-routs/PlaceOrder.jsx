@@ -259,21 +259,25 @@ const PlaceOrder = () => {
                     </InputGroup>
                   </div>
 
-                  <Table bordered className="mb-0">
+                  <Table bordered className="mb-0 table-fixed header-table">
                     <thead className="table-head">
                       <tr>
-                        <th style={{ width: "80px" }}>ID</th>
+                        <th>ID</th>
                         <th>Name</th>
                         <th>Category</th>
                         <th>Price</th>
-                        <th>Qty</th>
-                        <th style={{ width: "250px" }}>Action</th>
+                        <th>Stock</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                   </Table>
 
                   <div className="product-scroll">
-                    <Table bordered hover className="mb-0">
+                    <Table
+                      bordered
+                      hover
+                      className="mb-0 table-fixed body-table"
+                    >
                       <tbody>
                         {filteredProducts.map((product) => {
                           const cartQty =
@@ -281,9 +285,7 @@ const PlaceOrder = () => {
 
                           return (
                             <tr key={product.productid}>
-                              <td style={{ width: "80px" }}>
-                                {product.productid}
-                              </td>
+                              <td>{product.productid}</td>
                               <td>{product.productname}</td>
                               <td>{product.category}</td>
                               <td>₹ {product.productprice}</td>

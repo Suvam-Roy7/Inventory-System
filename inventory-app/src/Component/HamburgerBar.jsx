@@ -158,7 +158,7 @@ function HamburgerBar({ sidebarOpen, setSidebarOpen }) {
         {inventoryOpen && (
           <div className="ms-3 mb-3">
             <ReactLink
-              to="/update-quantity"
+              to="/inventory/updateproductquantity"
               className="btn btn-dark w-100 text-start mb-2"
               onClick={() => setSidebarOpen(false)}
             >
@@ -166,7 +166,7 @@ function HamburgerBar({ sidebarOpen, setSidebarOpen }) {
             </ReactLink>
 
             <ReactLink
-              to="/view-inventory"
+              to="/inventory/viewinventory"
               className="btn btn-dark w-100 text-start"
               onClick={() => setSidebarOpen(false)}
             >
