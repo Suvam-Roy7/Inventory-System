@@ -52,7 +52,13 @@ function NavBar() {
 
   return (
     <div>
-      <Navbar color="dark" dark expand="md" className="px-1">
+      <Navbar
+        color="#111827"
+        dark
+        expand="md"
+        className="px-1"
+        style={{ minHeight: "75px" }}
+      >
         {/* Hamburger Button */}
         {login && (
           <button
