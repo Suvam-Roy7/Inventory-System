@@ -52,6 +52,7 @@ public class JwtAuthenticationFilter implements GlobalFilter {
         List<String> publicPaths = List.of(
         		"/userservice/users/createnewuser",
         	    "/userservice/users/client",
+        	    "/userservice/users/getRoles",
         	    "/productservice/products/categories",
         	    "/authenticationservice/auth/login",
         	    "/authenticationservice/auth/register",

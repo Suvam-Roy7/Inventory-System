@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from "react";
-
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-
 import { NavLink as ReactLink } from "react-router-dom";
+import "../style/HamburgerBar.css";
 
 function HamburgerBar({ sidebarOpen, setSidebarOpen }) {
-  // =========================================
-  // STATES
-  // =========================================
-
-  // Product Category State
   const [productOpen, setProductOpen] = useState(false);
-
-  // Inventory Category State
   const [inventoryOpen, setInventoryOpen] = useState(false);
-
-  // Order Category State
   const [orderOpen, setOrderOpen] = useState(false);
-
-  // =========================================
-  // FREEZE BACKGROUND SCROLL
-  // =========================================
+  const [employeeOpen, setEmployeeOpen] = useState(false);
 
   useEffect(() => {
     if (sidebarOpen) {
@@ -36,90 +23,60 @@ function HamburgerBar({ sidebarOpen, setSidebarOpen }) {
 
   return (
     <>
-      {/* ========================================= */}
       {/* OVERLAY */}
-      {/* ========================================= */}
-
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
           style={{
             position: "fixed",
-            top: 0,
+            top: "75px",
             left: 0,
             width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0,0,0,0.5)",
+            height: "calc(100vh - 75px)",
+            backgroundColor: "rgba(0,0,0,0.45)",
             zIndex: 999,
           }}
         />
       )}
 
-      {/* ========================================= */}
       {/* SIDEBAR */}
-      {/* ========================================= */}
-
       <div
         style={{
-          // Fixed Position
           position: "fixed",
-
-          // Below Navbar
-          top: "56px",
-
-          // Open/Close Animation
+          top: "75px",
           left: sidebarOpen ? "0" : "-260px",
-
-          // Sidebar Width
           width: "260px",
-
-          // Full Height
-          height: "100vh",
-
-          // Dark Theme
-          backgroundColor: "#212529",
-
-          // Smooth Transition
-          transition: "0.3s",
-
-          // Above Overlay
+          height: "calc(100vh - 75px)",
+          backgroundColor: "#111827",
+          transition: "0.3s ease",
           zIndex: 1001,
-
-          // Inner Padding
           padding: "15px",
-
-          // Scroll
           overflowY: "auto",
-
-          // Text Color
           color: "white",
+          boxShadow: "4px 0 15px rgba(0,0,0,0.25)",
         }}
       >
-        {/* ========================================= */}
-        {/* PRODUCT CATEGORY */}
-        {/* ========================================= */}
-
+        {/* PRODUCT */}
         <div
           className="d-flex justify-content-between align-items-center mb-2"
           style={{
             cursor: "pointer",
-            padding: "10px",
-            borderRadius: "5px",
+            padding: "12px",
+            borderRadius: "8px",
+            background: productOpen ? "rgba(255,255,255,0.08)" : "transparent",
+            transition: "0.2s",
           }}
           onClick={() => setProductOpen(!productOpen)}
         >
-          <span>Product</span>
-
+          <span className="fw-semibold">Product</span>
           {productOpen ? <FaChevronUp /> : <FaChevronDown />}
         </div>
 
-        {/* PRODUCT BUTTONS */}
-
         {productOpen && (
-          <div className="ms-3 mb-3">
+          <div className="ms-2 mb-3">
             <ReactLink
               to="/product/addproduct"
-              className="btn btn-dark w-100 text-start mb-2"
+              className="sidebar-link w-100"
               onClick={() => setSidebarOpen(false)}
             >
               Add Product
@@ -127,7 +84,7 @@ function HamburgerBar({ sidebarOpen, setSidebarOpen }) {
 
             <ReactLink
               to="/product/allproducts"
-              className="btn btn-dark w-100 text-start mb-2"
+              className="sidebar-link w-100"
               onClick={() => setSidebarOpen(false)}
             >
               All Products
@@ -135,31 +92,29 @@ function HamburgerBar({ sidebarOpen, setSidebarOpen }) {
           </div>
         )}
 
-        {/* ========================================= */}
-        {/* INVENTORY CATEGORY */}
-        {/* ========================================= */}
-
+        {/* INVENTORY */}
         <div
           className="d-flex justify-content-between align-items-center mb-2"
           style={{
             cursor: "pointer",
-            padding: "10px",
-            borderRadius: "5px",
+            padding: "12px",
+            borderRadius: "8px",
+            background: inventoryOpen
+              ? "rgba(255,255,255,0.08)"
+              : "transparent",
+            transition: "0.2s",
           }}
           onClick={() => setInventoryOpen(!inventoryOpen)}
         >
-          <span>Inventory</span>
-
+          <span className="fw-semibold">Inventory</span>
           {inventoryOpen ? <FaChevronUp /> : <FaChevronDown />}
         </div>
 
-        {/* INVENTORY BUTTONS */}
-
         {inventoryOpen && (
-          <div className="ms-3 mb-3">
+          <div className="ms-2 mb-3">
             <ReactLink
               to="/inventory/updateproductquantity"
-              className="btn btn-dark w-100 text-start mb-2"
+              className="sidebar-link w-100"
               onClick={() => setSidebarOpen(false)}
             >
               Update Quantity
@@ -167,7 +122,7 @@ function HamburgerBar({ sidebarOpen, setSidebarOpen }) {
 
             <ReactLink
               to="/inventory/viewinventory"
-              className="btn btn-dark w-100 text-start"
+              className="sidebar-link w-100"
               onClick={() => setSidebarOpen(false)}
             >
               View Inventory
@@ -175,31 +130,27 @@ function HamburgerBar({ sidebarOpen, setSidebarOpen }) {
           </div>
         )}
 
-        {/* ========================================= */}
-        {/* ORDER CATEGORY */}
-        {/* ========================================= */}
-
+        {/* ORDERS */}
         <div
           className="d-flex justify-content-between align-items-center mb-2"
           style={{
             cursor: "pointer",
-            padding: "10px",
-            borderRadius: "5px",
+            padding: "12px",
+            borderRadius: "8px",
+            background: orderOpen ? "rgba(255,255,255,0.08)" : "transparent",
+            transition: "0.2s",
           }}
           onClick={() => setOrderOpen(!orderOpen)}
         >
-          <span>Order</span>
-
+          <span className="fw-semibold">Orders</span>
           {orderOpen ? <FaChevronUp /> : <FaChevronDown />}
         </div>
 
-        {/* ORDER BUTTONS */}
-
         {orderOpen && (
-          <div className="ms-3 mb-3">
+          <div className="ms-2 mb-3">
             <ReactLink
               to="/order/placeorder"
-              className="btn btn-dark w-100 text-start mb-2"
+              className="sidebar-link w-100"
               onClick={() => setSidebarOpen(false)}
             >
               Place New Order
@@ -207,10 +158,54 @@ function HamburgerBar({ sidebarOpen, setSidebarOpen }) {
 
             <ReactLink
               to="/order/orderhistory"
-              className="btn btn-dark w-100 text-start mb-2"
+              className="sidebar-link w-100"
               onClick={() => setSidebarOpen(false)}
             >
               Order History
+            </ReactLink>
+          </div>
+        )}
+
+        {/* EMPLOYEES */}
+        <div
+          className="d-flex justify-content-between align-items-center mb-2"
+          style={{
+            cursor: "pointer",
+            padding: "12px",
+            borderRadius: "8px",
+            background: employeeOpen ? "rgba(255,255,255,0.08)" : "transparent",
+            transition: "0.2s",
+          }}
+          onClick={() => setEmployeeOpen(!employeeOpen)}
+        >
+          <span className="fw-semibold">Employees</span>
+          {employeeOpen ? <FaChevronUp /> : <FaChevronDown />}
+        </div>
+
+        {employeeOpen && (
+          <div className="ms-2 mb-3">
+            <ReactLink
+              to="/employees/addemployee"
+              className="sidebar-link w-100"
+              onClick={() => setSidebarOpen(false)}
+            >
+              Add Employee
+            </ReactLink>
+
+            <ReactLink
+              to="/employees/allemployee"
+              className="sidebar-link w-100"
+              onClick={() => setSidebarOpen(false)}
+            >
+              All Employees
+            </ReactLink>
+
+            <ReactLink
+              to="/employees/promoteemployee"
+              className="sidebar-link w-100"
+              onClick={() => setSidebarOpen(false)}
+            >
+              Promote Employee
             </ReactLink>
           </div>
         )}

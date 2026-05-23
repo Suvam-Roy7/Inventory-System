@@ -33,3 +33,9 @@ export const getOrderHistory = (userid) => {
     .get(`/orderservice/orders/getorderhistoryofuser/${userid}`)
     .then((response) => response.data);
 };
+
+export const getMonthilySales = () => {
+  return privateAxios
+    .get(`/orderservice/orders/getMonthilySales`)
+    .then((response) => response.data);
+};

@@ -1,5 +1,7 @@
 package com.inventory.UserService.UserController;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -17,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inventory.UserService.DTOs.AuthLoginRequestDTO;
+import com.inventory.UserService.DTOs.PromoteUserDTO;
 import com.inventory.UserService.DTOs.UserCreationDTO;
 import com.inventory.UserService.DTOs.UserDetailsDTO;
 import com.inventory.UserService.DTOs.UserDetailsOutputDTO;
 import com.inventory.UserService.Service.UserServices;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
@@ -64,9 +68,9 @@ public class UserController {
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
-	@PutMapping("/admin/promoteusertoadmin/{email}")
-	public ResponseEntity<UserDetailsOutputDTO> promoteUserToAdmin(@Valid  @PathVariable String email){
-		UserDetailsOutputDTO userDetailsDTO = userServices.promoteUserToAdmin(email);
+	@PutMapping("/admin/promoteemployee")
+	public ResponseEntity<UserDetailsOutputDTO> promoteUser(@RequestBody PromoteUserDTO userDto){
+		UserDetailsOutputDTO userDetailsDTO = userServices.promoteEmployee(userDto);
 		return new ResponseEntity<>(userDetailsDTO, HttpStatus.OK);
 	}
 	
@@ -74,5 +78,17 @@ public class UserController {
 	@DeleteMapping("/admin/deleteUserByEmail/{email}")
 	public ResponseEntity<Boolean> deleteUserByEmail(@Valid @PathVariable String email){
 		return new ResponseEntity<>(userServices.deleteUserByEmail(email), HttpStatus.OK);
+	}
+	
+	@Hidden
+	@GetMapping("/getRoles")
+	public ResponseEntity<List<String>> getRoles() {
+	    return new ResponseEntity<>(List.of("ADMIN", "ASSOCIATE", "MANAGER"), HttpStatus.OK);
+	}
+	
+	@Hidden
+	@GetMapping("/getAllEmployee")
+	public ResponseEntity<List<UserDetailsOutputDTO>> getAllEmployees(){
+		return new ResponseEntity<>(userServices.getAllEmployees(), HttpStatus.OK);
 	}
 }

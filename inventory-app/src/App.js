@@ -21,6 +21,9 @@ import PlaceOrder from "./Pages/order-routs/PlaceOrder";
 import OrderHistory from "./Pages/order-routs/OrderHistory";
 import UpdateProductQuantity from "./Pages/inventory-routs/UpdateProductQuantity";
 import ViewInventory from "./Pages/inventory-routs/ViewInventory";
+import PromoteEmployee from "./Pages/employee-routs/PromoteEmployee";
+import AllEmployees from "./Pages/employee-routs/AllEmployees";
+import AddEmployee from "./Pages/employee-routs/AddEmployee";
 
 function App() {
   return (
@@ -55,6 +58,12 @@ function App() {
             element={<UpdateProductQuantity />}
           />
           <Route path="viewinventory" element={<ViewInventory />} />
+        </Route>
+
+        <Route path="/employees" element={<PrivateUserRout />}>
+          <Route path="promoteemployee" element={<PromoteEmployee />} />
+          <Route path="allemployee" element={<AllEmployees />} />
+          <Route path="addemployee" element={<AddEmployee />} />
         </Route>
       </Routes>
     </BrowserRouter>

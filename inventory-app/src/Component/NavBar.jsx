@@ -68,7 +68,7 @@ function NavBar() {
             <FaBars size={22} />
           </button>
         )}
-        <NavbarBrand tag={ReactLink} to="/">
+        <NavbarBrand tag={ReactLink} to="/user/dashboard">
           StockBridge
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />

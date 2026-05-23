@@ -42,6 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 path.startsWith("/swagger-ui") ||
                 path.equals("/swagger-ui.html") ||
                 path.startsWith("/userservice/users/createnewuser") ||
+                path.startsWith("/userservice/users/getRoles") ||
                 path.startsWith("/userservice/users/client");
 
         System.out.println("🟡 [UserService] shouldNotFilter RESULT = " + skip);

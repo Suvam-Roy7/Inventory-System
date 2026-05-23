@@ -1,6 +1,7 @@
 package com.inventory.OrderService.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -99,6 +100,12 @@ public class OrderController {
 		List<OrderHistoryDisplyDTO> list = orderService.getOrderHistoryByUserId(userid);
 		
 		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getMonthilySales")
+	public ResponseEntity< Map<String, Double>> getMonthilySales(){
+		Map<String, Double> res = orderService.getMonthilySales();
+		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 }

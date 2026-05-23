@@ -1,5 +1,7 @@
 package com.inventory.UserService.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.inventory.UserService.DTOs.PromoteUserDTO;
 import com.inventory.UserService.DTOs.UserCreationDTO;
 import com.inventory.UserService.DTOs.UserDetailsDTO;
 import com.inventory.UserService.DTOs.UserDetailsOutputDTO;
@@ -110,12 +113,24 @@ public class UserServices {
 
 	}
 	
-	public UserDetailsOutputDTO promoteUserToAdmin(String useremail) {
+	public UserDetailsOutputDTO promoteEmployee(PromoteUserDTO usereDto) {
 		
-		User user = usersRepo.findByEmail(useremail)
-				.orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + useremail));
+		User user = usersRepo.findByEmail(usereDto.getEmail())
+				.orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + usereDto.getEmail()));
 		
-		user.setRole(Role.ADMIN);
+		if(usereDto.getRole().equals("ADMIN")) {
+			user.setRole(Role.ADMIN);
+		}
+		else if(usereDto.getRole().equals("MANAGER")) {
+			user.setRole(Role.MANAGER);
+		}
+		else if(usereDto.getRole().equals("ASSOCIATE")) {
+			user.setRole(Role.ASSOCIATE);
+		}
+		else {
+			throw new ResourceNotFoundException("Role Not Found");
+		}
+		
 		usersRepo.save(user);
 		
 		return modelMapper.map(user, UserDetailsOutputDTO.class);	
@@ -131,5 +146,13 @@ public class UserServices {
 		return true;
 		
 	}
+	
+	public List<UserDetailsOutputDTO> getAllEmployees() {
+	    return usersRepo.findAll()
+	            .stream()
+	            .map(user -> modelMapper.map(user, UserDetailsOutputDTO.class))
+	            .toList();   
+	}
+	
 
 }

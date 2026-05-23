@@ -41,7 +41,7 @@ const Base = ({ children }) => {
             color: "#d1d5db",
             padding: "18px 30px",
             borderTop: "1px solid #374151",
-            marginTop: "10px",
+            marginTop: "0px",
           }}
         >
           <div

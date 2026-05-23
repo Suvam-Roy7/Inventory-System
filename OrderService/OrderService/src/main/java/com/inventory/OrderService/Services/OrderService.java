@@ -2,7 +2,7 @@ package com.inventory.OrderService.Services;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.Month;
 import java.util.*;
 
 import org.modelmapper.ModelMapper;
@@ -31,6 +31,8 @@ import com.inventory.OrderService.Repo.OrderRepo;
 import com.inventory.OrderService.Utilities.ProductQuantityMessage;
 
 import jakarta.transaction.Transactional;
+
+
 
 @Service
 public class OrderService {
@@ -295,5 +297,32 @@ public class OrderService {
 		}
 		
 		return ordDisplayList;
+	}
+	
+	public Map<String, Double> getMonthilySales(){
+		
+		LocalDateTime date = LocalDateTime.now();
+		
+		int year = date.getYear();
+		
+		List<Order> oredrList = orderRepo.findOrdersByYear(year);
+		
+		Map<String, Double> result = new HashMap<>();
+		
+		for(Order o : oredrList) {
+			
+			String mon = o.getDate().getMonth().toString();
+			
+			if(result.containsKey(mon)) {
+				result.put(mon, result.get(mon) + o.getTotalamount());
+			}
+			else {
+				result.put(mon, o.getTotalamount());
+			}
+		}
+		
+		
+		return result;
+		
 	}
 }

@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/userservice/users/createnewuser",
                         "/userservice/users/client/**",
+                        "/userservice/users/getRoles",
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-ui.html"
