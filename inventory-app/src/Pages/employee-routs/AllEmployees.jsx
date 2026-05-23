@@ -2,25 +2,28 @@ import React, { useEffect, useState } from "react";
 import {
   getAllEmployee,
   deleteEmployee,
+  editEmployee,
 } from "../../services/employee-service";
 import bgImage from "../../assets/employee.jpg";
 import Base from "../../Component/Base";
 
 import { Card, CardBody, Badge, Spinner, Input } from "reactstrap";
 
-import { FaUser, FaEnvelope, FaIdBadge, FaTrash } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaIdBadge, FaTrash, FaEdit } from "react-icons/fa";
+
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const AllEmployees = () => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-
   const [deletingId, setDeletingId] = useState(null);
 
-  // MODAL STATES
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllEmployee()
@@ -28,13 +31,12 @@ const AllEmployees = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  // OPEN MODAL
+  /* ================= DELETE ================= */
   const openDeleteModal = (emp) => {
     setSelectedEmployee(emp);
     setShowDeleteModal(true);
   };
 
-  // CONFIRM DELETE
   const confirmDelete = () => {
     if (!selectedEmployee) return;
 
@@ -54,6 +56,13 @@ const AllEmployees = () => {
         setShowDeleteModal(false);
         setSelectedEmployee(null);
       });
+  };
+
+  /* ================= EDIT NAV ================= */
+  const handleEdit = (emp) => {
+    navigate("/employees/editemployee", {
+      state: emp, // send employee data
+    });
   };
 
   const filteredEmployees = employees.filter(
@@ -111,18 +120,29 @@ const AllEmployees = () => {
 
                           <Badge className="role-badge">{emp.role}</Badge>
 
-                          {/* DELETE BUTTON */}
-                          <button
-                            className="delete-icon-btn"
-                            onClick={() => openDeleteModal(emp)}
-                            disabled={deletingId === emp.userid}
-                          >
-                            {deletingId === emp.userid ? (
-                              <Spinner size="sm" />
-                            ) : (
-                              <FaTrash />
-                            )}
-                          </button>
+                          {/* ACTION BUTTONS */}
+                          <div className="action-box">
+                            {/* EDIT */}
+                            <button
+                              className="icon-btn edit-btn"
+                              onClick={() => handleEdit(emp)}
+                            >
+                              <FaEdit />
+                            </button>
+
+                            {/* DELETE */}
+                            <button
+                              className="icon-btn delete-btn"
+                              onClick={() => openDeleteModal(emp)}
+                              disabled={deletingId === emp.userid}
+                            >
+                              {deletingId === emp.userid ? (
+                                <Spinner size="sm" />
+                              ) : (
+                                <FaTrash />
+                              )}
+                            </button>
+                          </div>
                         </CardBody>
                       </Card>
                     </div>
@@ -134,7 +154,7 @@ const AllEmployees = () => {
         </div>
       </div>
 
-      {/* ================= MODAL ================= */}
+      {/* ================= DELETE MODAL ================= */}
       {showDeleteModal && (
         <div className="modal-overlay">
           <div className="modal-box">
@@ -169,7 +189,6 @@ const AllEmployees = () => {
           background: url(${bgImage}) center/cover no-repeat;
           position: relative;
           padding: 30px;
-          overflow: hidden;
         }
 
         .overlay {
@@ -191,6 +210,7 @@ const AllEmployees = () => {
           margin-bottom: 20px;
         }
 
+        /* SEARCH */
         .search-box {
           display: flex;
           justify-content: center;
@@ -208,17 +228,6 @@ const AllEmployees = () => {
         .search-input:focus {
           box-shadow: 0 0 12px #00d4ff;
           border: 1px solid #00d4ff;
-          color: #fff;
-        }
-
-        .loader {
-          text-align: center;
-          color: #fff;
-        }
-
-        .no-data {
-          color: #fff;
-          text-align: center;
         }
 
         /* CARD */
@@ -228,7 +237,6 @@ const AllEmployees = () => {
           border: 1px solid rgba(255,255,255,0.15);
           backdrop-filter: blur(16px);
           color: #fff;
-          box-shadow: 0 8px 30px rgba(0,0,0,0.4);
         }
 
         .emp-card {
@@ -236,7 +244,7 @@ const AllEmployees = () => {
         }
 
         .emp-card-body {
-          min-height: 170px;
+          min-height: 180px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -256,6 +264,7 @@ const AllEmployees = () => {
           font-size: 14px;
         }
 
+        /* ROLE */
         .role-badge {
           align-self: flex-start;
           padding: 5px 10px;
@@ -264,34 +273,47 @@ const AllEmployees = () => {
           font-size: 11px;
         }
 
-        /* DELETE BUTTON */
-        .delete-icon-btn {
+        /* ACTION BUTTONS */
+        .action-box {
           position: absolute;
           bottom: 12px;
           right: 12px;
 
-          width: 38px;
-          height: 38px;
+          display: flex;
+          gap: 8px;
+        }
 
-          border: none;
+        .icon-btn {
+          width: 36px;
+          height: 36px;
           border-radius: 10px;
-
-          background: #ff1f1f;
-          color: #fff;
-
+          border: none;
           display: flex;
           align-items: center;
           justify-content: center;
-
-          box-shadow: 0 0 12px rgba(255,0,0,0.5);
           cursor: pointer;
           transition: 0.25s;
+          color: #fff;
         }
 
-        .delete-icon-btn:hover {
+        /* EDIT BUTTON */
+        .edit-btn {
+          background: rgba(6, 174, 96, 0.9);
+        }
+
+        .edit-btn:hover {
           transform: scale(1.1);
-          background: #ff0000;
-          box-shadow: 0 0 18px rgba(255,0,0,0.7);
+          box-shadow: 0 0 12px rgba(63, 212, 13, 0.84);
+        }
+
+        /* DELETE BUTTON */
+        .delete-btn {
+          background: #ff1f1f;
+        }
+
+        .delete-btn:hover {
+          transform: scale(1.1);
+          box-shadow: 0 0 12px rgba(255,0,0,0.6);
         }
 
         /* MODAL */
@@ -310,11 +332,7 @@ const AllEmployees = () => {
           width: 350px;
           padding: 20px;
           border-radius: 18px;
-
           background: rgba(255,255,255,0.1);
-          border: 1px solid rgba(255,255,255,0.2);
-          backdrop-filter: blur(18px);
-
           color: #fff;
           text-align: center;
         }
@@ -328,7 +346,6 @@ const AllEmployees = () => {
         .cancel-btn {
           flex: 1;
           margin-right: 10px;
-          padding: 8px;
           border-radius: 10px;
           border: none;
           background: rgba(255,255,255,0.2);
@@ -337,7 +354,6 @@ const AllEmployees = () => {
 
         .confirm-btn {
           flex: 1;
-          padding: 8px;
           border-radius: 10px;
           border: none;
           background: #ff1f1f;

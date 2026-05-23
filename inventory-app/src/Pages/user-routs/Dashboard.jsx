@@ -29,6 +29,8 @@ import { getAllProducts } from "../../services/product-service";
 import { getProductAvlQuantity } from "../../services/inventory-service";
 import { getMonthilySales } from "../../services/order-service";
 
+import bgImage from "../../assets/dashboard.jpg";
+
 const Dashboard = () => {
   const [products, setProducts] = useState([]);
   const [salesData, setSalesData] = useState([]);

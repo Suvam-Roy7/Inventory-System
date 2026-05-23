@@ -91,4 +91,15 @@ public class UserController {
 	public ResponseEntity<List<UserDetailsOutputDTO>> getAllEmployees(){
 		return new ResponseEntity<>(userServices.getAllEmployees(), HttpStatus.OK);
 	}
+	
+	@PutMapping("/updateUser/{email}")
+	public ResponseEntity<UserDetailsOutputDTO> updateUser(
+	        @PathVariable String email,
+	        @RequestBody UserCreationDTO dto) {
+
+	    return new ResponseEntity<>(
+	            userServices.updateUser(email, dto),
+	            HttpStatus.OK
+	    );
+	}
 }

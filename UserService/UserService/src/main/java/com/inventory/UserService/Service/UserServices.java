@@ -154,5 +154,25 @@ public class UserServices {
 	            .toList();   
 	}
 	
+	public UserDetailsOutputDTO updateUser(String email, UserCreationDTO dto) {
+
+	    User user = usersRepo.findByEmail(email)
+	            .orElseThrow(() -> new RuntimeException("User not found"));
+
+	    // update fields
+	    user.setUsername(dto.getUsername());
+
+	    // update email only if needed
+	    user.setEmail(dto.getEmail());
+
+	    // password update (only if provided)
+	    if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+	        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+	    }
+
+	    usersRepo.save(user);
+
+	    return modelMapper.map(user, UserDetailsOutputDTO.class);
+	}
 
 }

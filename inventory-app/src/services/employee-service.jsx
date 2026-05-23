@@ -29,3 +29,9 @@ export const deleteEmployee = (email) => {
     .delete(`/userservice/users/admin/deleteUserByEmail/${email}`)
     .then((response) => response.data);
 };
+
+export const editEmployee = (email, user) => {
+  return privateAxios
+    .put(`/userservice/users/updateUser/${email}`, user)
+    .then((response) => response.data);
+};

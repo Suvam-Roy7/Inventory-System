@@ -24,6 +24,7 @@ import ViewInventory from "./Pages/inventory-routs/ViewInventory";
 import PromoteEmployee from "./Pages/employee-routs/PromoteEmployee";
 import AllEmployees from "./Pages/employee-routs/AllEmployees";
 import AddEmployee from "./Pages/employee-routs/AddEmployee";
+import EditEmployee from "./Pages/employee-routs/EditEmployee";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path="promoteemployee" element={<PromoteEmployee />} />
           <Route path="allemployee" element={<AllEmployees />} />
           <Route path="addemployee" element={<AddEmployee />} />
+          <Route path="editemployee" element={<EditEmployee />} />
         </Route>
       </Routes>
     </BrowserRouter>
